@@ -1,0 +1,15 @@
+.App {
+  width: 40rem;
+  margin: 0 auto;
+}
+* {
+  margin: 0;
+  padding: 0;
+}
+input {
+  max-width: 25rem;
+}
+input[type="submit"] {
+  width: fit-content;
+  padding: 0.2rem;
+}

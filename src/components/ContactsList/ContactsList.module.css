@@ -1,0 +1,17 @@
+
+
+.ContactsList {
+  padding-left: 3rem;
+}
+
+.ListItem {
+  width: 100%;
+  margin-top: 0.3rem;
+}
+
+.ListItemContainer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
