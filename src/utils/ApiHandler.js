@@ -1,4 +1,4 @@
-const API_LINK = "https://645aa0bf65bd868e9320b568.mockapi.io/";
+const API_LINK = "https://connections-api.herokuapp.com/";
 
 export const operationTypes = {
   get: "GET",
@@ -8,17 +8,26 @@ export const operationTypes = {
   delete: "DELETE",
 };
 
-export async function tryFetch(ending, type = operationTypes.get, payload = false) {
+export async function tryFetch(
+  ending,
+  type = operationTypes.get,
+  additionalHeaders = {},
+  payload = false
+) {
   try {
     const attributes = {
       method: type,
       headers: {
         "Content-Type": "application/json",
+        ...additionalHeaders,
       },
     };
     if (payload) {
       attributes.body = JSON.stringify(payload);
     }
+    console.log(`Used link: ${API_LINK + ending}`);
+    console.log("Fetch attributes:");
+    console.log(attributes);
     const result = await fetch(API_LINK + ending, attributes);
     if (result.ok) {
       const resultJson = await result.json();

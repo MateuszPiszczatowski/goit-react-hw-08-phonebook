@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { addContactOp, getContactsOp, deleteContactOp } from "./operations";
 
 const contactsInitialState = {
-  isLoading: true,
+  isLoading: false,
   error: null,
   contacts: [],
 };
@@ -53,4 +53,3 @@ const contactsSlice = createSlice({
 });
 
 export const contactsReducer = contactsSlice.reducer;
-export const { addContact, removeContact, loadContacts } = contactsSlice.actions;

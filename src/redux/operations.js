@@ -1,10 +1,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { tryFetch, operationTypes } from "../utils/ApiHandler";
 
-const resourceName = "contacts";
+const contactsApiEnding = "contacts";
+const usersApiEnding = "users";
 
-export const getContactsOp = createAsyncThunk("tasks/getContacts", async (_, thunkAPI) => {
-  const result = await tryFetch(resourceName);
+export const getContactsOp = createAsyncThunk("contacts/getContacts", async (token, thunkAPI) => {
+  const result = await tryFetch(contactsApiEnding, operationTypes.get, {
+    Authorization: token,
+  });
   if (result.success) {
     return result.data;
   } else {
@@ -12,8 +15,60 @@ export const getContactsOp = createAsyncThunk("tasks/getContacts", async (_, thu
   }
 });
 
-export const getContactOp = createAsyncThunk("tasks/getContact", async (id, thunkAPI) => {
-  const result = await tryFetch(`${resourceName}/${id}`);
+export const addContactOp = createAsyncThunk(
+  "contacts/addContact",
+  async ({ token, contact }, thunkAPI) => {
+    const result = await tryFetch(
+      contactsApiEnding,
+      operationTypes.post,
+      {
+        Authorization: token,
+      },
+      contact
+    );
+    if (result.success) {
+      return result.data;
+    } else {
+      return thunkAPI.rejectWithValue(result.errorMessage);
+    }
+  }
+);
+
+export const patchContactOp = createAsyncThunk(
+  "contacts/updateContact",
+  async ({ token, contact }, thunkAPI) => {
+    const result = await tryFetch(
+      `${contactsApiEnding}/${contact.id}`,
+      operationTypes.put,
+      {
+        Authorization: token,
+      },
+      contact
+    );
+    if (result.success) {
+      return result.data;
+    } else {
+      return thunkAPI.rejectWithValue(result.errorMessage);
+    }
+  }
+);
+
+export const deleteContactOp = createAsyncThunk(
+  "contacts/removeContact",
+  async ({ token, id }, thunkAPI) => {
+    const result = await tryFetch(`${contactsApiEnding}/${id}`, operationTypes.delete, {
+      Authorization: token,
+    });
+    if (result.success) {
+      return result.data;
+    } else {
+      return thunkAPI.rejectWithValue(result.errorMessage);
+    }
+  }
+);
+
+export const signupOp = createAsyncThunk("user/signup", async (credentials, thunkAPI) => {
+  const result = await tryFetch(`${usersApiEnding}/signup`, operationTypes.post, {}, credentials);
   if (result.success) {
     return result.data;
   } else {
@@ -21,8 +76,21 @@ export const getContactOp = createAsyncThunk("tasks/getContact", async (id, thun
   }
 });
 
-export const addContactOp = createAsyncThunk("tasks/addContact", async (contact, thunkAPI) => {
-  const result = await tryFetch(resourceName, operationTypes.post, contact);
+export const loginOp = createAsyncThunk("user/login", async (credentials, thunkAPI) => {
+  const result = await tryFetch(`${usersApiEnding}/login`, operationTypes.post, {}, credentials);
+  if (result.success) {
+    console.log("login result");
+    console.log(result.data);
+    return result.data;
+  } else {
+    return thunkAPI.rejectWithValue(result.errorMessage);
+  }
+});
+
+export const logoutOp = createAsyncThunk("user/logout", async (token, thunkAPI) => {
+  const result = await tryFetch(`${usersApiEnding}/logout`, operationTypes.post, {
+    Authorization: token,
+  });
   if (result.success) {
     return result.data;
   } else {
@@ -30,26 +98,10 @@ export const addContactOp = createAsyncThunk("tasks/addContact", async (contact,
   }
 });
 
-export const patchContactOp = createAsyncThunk("tasks/updateContact", async (contact, thunkAPI) => {
-  const result = await tryFetch(`${resourceName}/${contact.id}`, operationTypes.put, contact);
-  if (result.success) {
-    return result.data;
-  } else {
-    return thunkAPI.rejectWithValue(result.errorMessage);
-  }
-});
-
-export const putContactOp = createAsyncThunk("tasks/swapContact", async (contact, thunkAPI) => {
-  const result = await tryFetch(`${resourceName}/${contact.id}`, operationTypes.put, contact);
-  if (result.success) {
-    return result.data;
-  } else {
-    return thunkAPI.rejectWithValue(result.errorMessage);
-  }
-});
-
-export const deleteContactOp = createAsyncThunk("tasks/removeContact", async (id, thunkAPI) => {
-  const result = await tryFetch(`${resourceName}/${id}`, operationTypes.delete);
+export const getCurrentUserOp = createAsyncThunk("user/getCurrentUser", async (token, thunkAPI) => {
+  const result = await tryFetch(`${usersApiEnding}/current`, operationTypes.get, {
+    Authorization: token,
+  });
   if (result.success) {
     return result.data;
   } else {

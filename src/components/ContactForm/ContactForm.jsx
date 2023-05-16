@@ -1,12 +1,13 @@
 import css from "./ContactForm.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { addContactOp } from "../../redux/operations";
-import { getContacts } from "../../redux/selectors";
+import { getContacts, getToken } from "../../redux/selectors";
 import { Notify } from "notiflix";
 
 const ContactForm = () => {
   const dispatch = useDispatch();
   const contacts = useSelector(getContacts);
+  const token = useSelector(getToken);
   const handleSubmit = (event) => {
     event.preventDefault();
     const form = event.target;
@@ -14,8 +15,8 @@ const ContactForm = () => {
     if (contacts.some((contact) => contact.name.toLowerCase() === name.toLowerCase())) {
       Notify.failure(`${name} is already on the list!`);
     } else {
-      const phone = form.elements.number.value;
-      dispatch(addContactOp({ name, phone }));
+      const number = form.elements.number.value;
+      dispatch(addContactOp({ token: token, contact: { name, number } }));
     }
     form.reset();
   };
