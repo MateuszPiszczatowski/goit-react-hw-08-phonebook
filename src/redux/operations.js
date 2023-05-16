@@ -102,9 +102,13 @@ export const getCurrentUserOp = createAsyncThunk("user/getCurrentUser", async (t
   const result = await tryFetch(`${usersApiEnding}/current`, operationTypes.get, {
     Authorization: token,
   });
+  console.log("happened");
   if (result.success) {
     return result.data;
   } else {
+    if (result.errorMessage.slice(0, 3) === "401") {
+      result.errorMessage = "Invalid token. Log in again.";
+    }
     return thunkAPI.rejectWithValue(result.errorMessage);
   }
 });

@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { addContactOp, getContactsOp, deleteContactOp } from "./operations";
+import { addContactOp, getContactsOp, deleteContactOp, logoutOp } from "./operations";
 
 const contactsInitialState = {
   isLoading: false,
@@ -10,6 +10,11 @@ const contactsInitialState = {
 const contactsSlice = createSlice({
   name: "contacts",
   initialState: contactsInitialState,
+  reducers: {
+    resetContacts(state, action) {
+      return contactsInitialState;
+    },
+  },
   extraReducers: {
     [addContactOp.fulfilled](state, action) {
       state.error = null;
@@ -49,7 +54,11 @@ const contactsSlice = createSlice({
     [deleteContactOp.pending](state, action) {
       state.isLoading = true;
     },
+    [logoutOp.fulfilled](state, action) {
+      return contactsInitialState;
+    },
   },
 });
 
 export const contactsReducer = contactsSlice.reducer;
+export const { resetContacts } = contactsSlice.actions;

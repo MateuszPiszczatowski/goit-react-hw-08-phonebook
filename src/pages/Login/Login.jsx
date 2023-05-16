@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { loginOp } from "../../redux/operations";
+import { getCurrentUserOp, loginOp } from "../../redux/operations";
 import { useEffect } from "react";
-import { getToken, getUser } from "../../redux/selectors";
+import { getUser } from "../../redux/selectors";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -15,27 +15,29 @@ const Login = () => {
     let { email, password } = e.target.elements;
     email = email.value;
     password = password.value;
-    if (password !== "" && email !== "") {
-      dispatch(loginOp({ email, password }));
-    }
+    dispatch(loginOp({ email, password }));
   };
 
   useEffect(() => {
     if (user.token && user.name) {
       navigate("/phonebook");
     }
-  }, [user, navigate]);
+    if (user.token === null) {
+      return;
+    }
+    dispatch(getCurrentUserOp(user.token));
+  }, [user, navigate, dispatch]);
 
   return (
     <>
       <form onSubmit={handleSubmit}>
         <label>
           E-mail:
-          <input type="email" name="email" />
+          <input type="email" name="email" required />
         </label>
         <label>
           Password:
-          <input type="password" name="password" />
+          <input type="password" name="password" required />
         </label>
         <input type="submit" value="Log in" />
       </form>

@@ -12,8 +12,10 @@ const handlePending = (state) => {
   state.isLoading = true;
 };
 const handleRejected = (state, action) => {
-  state.isLoading = false;
-  state.error = action.payload;
+  const newState = { ...state };
+  newState.isLoading = false;
+  newState.error = action.payload;
+  return newState;
 };
 
 const userSlice = createSlice({
@@ -53,8 +55,10 @@ const userSlice = createSlice({
       state.email = action.payload.email;
     },
     [getCurrentUserOp.rejected](state, action) {
-      state = userInitialState;
-      state.error = action.payload;
+      console.log("Happened");
+      const newState = { ...userInitialState };
+      newState.error = action.payload;
+      return newState;
     },
     [getCurrentUserOp.pending]: handlePending,
   },
