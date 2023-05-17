@@ -25,9 +25,6 @@ export async function tryFetch(
     if (payload) {
       attributes.body = JSON.stringify(payload);
     }
-    console.log(`Used link: ${API_LINK + ending}`);
-    console.log("Fetch attributes:");
-    console.log(attributes);
     const result = await fetch(API_LINK + ending, attributes);
     if (result.ok) {
       const resultJson = await result.json();

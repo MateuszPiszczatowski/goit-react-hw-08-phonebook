@@ -1,6 +1,5 @@
 import { Routes, Route } from "react-router-dom";
 import { lazy, Suspense } from "react";
-import HomeRedirect from "./components/HomeRedirect/HomeRedirect";
 import Navigator from "./components/Navigator/Navigator";
 
 const RoutesComponent = () => {
@@ -16,7 +15,7 @@ const RoutesComponent = () => {
           <Route path="register" element={<Register />} />
           <Route path="phonebook" element={<Phonebook />} />
         </Route>
-        <Route path="*" element={<HomeRedirect />} />
+        <Route path="*" element={<Navigator />} />
       </Routes>
     </Suspense>
   );
