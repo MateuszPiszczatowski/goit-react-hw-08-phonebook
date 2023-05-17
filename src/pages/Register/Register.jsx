@@ -3,6 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { getCurrentUserOp, signupOp } from "../../redux/operations";
 import { useEffect } from "react";
 import { getUser } from "../../redux/selectors";
+import { nanoid } from "nanoid";
+import css from "./Register.module.css";
+import Button from "../../components/Button/Button";
 
 const Register = () => {
   const dispatch = useDispatch();
@@ -29,33 +32,40 @@ const Register = () => {
     dispatch(getCurrentUserOp(user.token));
   }, [user, navigate, dispatch]);
 
-  return (
-    <>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Name:
-          <input type="text" name="name" required />
-        </label>
-        <label>
-          E-mail:
-          <input type="email" name="email" required />
-        </label>
-        <label>
-          Password:
-          <input
-            type="password"
-            name="password"
-            pattern="^.{7,}$"
-            title="Minimum 7 characters"
-            required
-          />
-        </label>
-        <input type="submit" value="Register" />
+  const nameId = nanoid();
+  const emailId = nanoid();
+  const passwordId = nanoid();
+  return user.name ? (
+    <h2>Redirecting...</h2>
+  ) : user.token ? (
+    <h2>Loading user data</h2>
+  ) : (
+    <div className={css.RegisterPage}>
+      <form onSubmit={handleSubmit} className={css.RegisterForm}>
+        <label htmlFor={nameId}>Name:</label>
+        <input type="text" name="name" required id={nameId} />
+        <label htmlFor={emailId}>E-mail:</label>
+        <input type="email" name="email" required id={emailId} />
+        <label htmlFor={passwordId}>Password:</label>
+        <input
+          type="password"
+          name="password"
+          pattern="^.{7,}$"
+          title="Minimum 7 characters"
+          required
+          id={passwordId}
+        />
+        <Button type="submit" className={css.SubmitButton}>
+          Register
+        </Button>
       </form>
-      <p>
-        Already have an account? Login <Link to={`/login`}>here</Link>
+      <p className={css.LoginRedirect}>
+        Already have an account? Login{" "}
+        <Link className={css.LoginLink} to={`/login`}>
+          here
+        </Link>
       </p>
-    </>
+    </div>
   );
 };
 

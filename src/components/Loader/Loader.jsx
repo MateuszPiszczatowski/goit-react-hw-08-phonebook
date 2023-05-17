@@ -4,7 +4,7 @@ import { Circles } from "react-loader-spinner";
 function Loader() {
   return (
     <div className={css.Loader}>
-      <Circles />
+      <Circles color="#62442D" />
     </div>
   );
 }

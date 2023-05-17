@@ -1,9 +1,8 @@
 .ContactForm {
   display: flex;
   flex-direction: column;
-  margin-bottom: 2rem;
   border: 1px solid black;
-  padding: 0 7rem 0.5rem 0.5rem;
+  padding: 0.5rem;
 }
 
 .Label {
@@ -12,8 +11,4 @@
 
 .Input {
   margin-bottom: 0.5rem;
-}
-
-.Input:nth-last-of-type(2) {
-  margin-bottom: 1.3rem;
 }

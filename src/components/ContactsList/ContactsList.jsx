@@ -4,6 +4,7 @@ import { getContacts, getToken } from "../../redux/selectors";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { deleteContactOp, getContactsOp } from "../../redux/operations";
+import Button from "../Button/Button";
 
 const ContactsList = () => {
   const dispatch = useDispatch();
@@ -29,7 +30,9 @@ const ContactsList = () => {
               <li key={nanoid()} className={css.ListItem}>
                 <div className={css.ListItemContainer}>
                   {`${contact.name}: ${contact.number}`}
-                  <button onClick={handleRemove}>Delete</button>
+                  <Button $red onClick={handleRemove}>
+                    Delete
+                  </Button>
                 </div>
               </li>
             );

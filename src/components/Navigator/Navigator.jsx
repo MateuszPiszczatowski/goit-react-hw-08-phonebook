@@ -20,7 +20,7 @@ const Navigator = () => {
     }
     dispatch(getCurrentUserOp(userState.token));
   }, [dispatch, navigate, userState]);
-  return <p>Loading...</p>;
+  return <h2>Loading...</h2>;
 };
 
 export default Navigator;

@@ -3,6 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { getCurrentUserOp, loginOp } from "../../redux/operations";
 import { useEffect } from "react";
 import { getUser } from "../../redux/selectors";
+import css from "./Login.module.css";
+import { nanoid } from "nanoid";
+import Button from "../../components/Button/Button";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -28,23 +31,31 @@ const Login = () => {
     dispatch(getCurrentUserOp(user.token));
   }, [user, navigate, dispatch]);
 
-  return (
-    <>
-      <form onSubmit={handleSubmit}>
-        <label>
-          E-mail:
-          <input type="email" name="email" required />
-        </label>
-        <label>
-          Password:
-          <input type="password" name="password" required />
-        </label>
-        <input type="submit" value="Log in" />
+  const passwordFieldId = nanoid();
+  const emailFieldId = nanoid();
+
+  return user.name ? (
+    <h2>Redirecting...</h2>
+  ) : user.token ? (
+    <h2>Loading user data</h2>
+  ) : (
+    <div className={css.LoginPage}>
+      <form className={css.LoginForm} onSubmit={handleSubmit}>
+        <label htmlFor={emailFieldId}>E-mail:</label>
+        <input type="email" name="email" required id={emailFieldId} />
+        <label htmlFor={passwordFieldId}>Password:</label>
+        <input type="password" name="password" required id={passwordFieldId} />
+        <Button className={css.SubmitButton} type="submit">
+          Log in
+        </Button>
       </form>
-      <p>
-        Don't have an account? Register <Link to={`/register`}>here</Link>
+      <p className={css.RegisterRedirect}>
+        Don't have an account? Register{" "}
+        <Link to={`/register`} className={css.RegisterLink}>
+          here
+        </Link>
       </p>
-    </>
+    </div>
   );
 };
 

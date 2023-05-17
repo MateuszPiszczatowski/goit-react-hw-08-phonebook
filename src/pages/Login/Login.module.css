@@ -1,0 +1,33 @@
+.LoginPage {
+  width: fit-content;
+  background-color: #c29979;
+  padding: 0.5rem;
+  border-radius: 5px;
+  color: black;
+}
+
+.LoginForm {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.SubmitButton {
+  align-self: flex-end;
+}
+
+.RegisterRedirect {
+  padding-top: 0.5rem;
+}
+.RegisterLink {
+  color: black;
+  text-decoration: none;
+  background: #f3d9b1;
+  padding: 0 0.2rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+}
+.RegisterLink:hover,
+.RegisterLink:active {
+  background-color: whitesmoke;
+}

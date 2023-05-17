@@ -1,0 +1,16 @@
+.PhonebookPage {
+  width: fit-content;
+  background-color: #c29979;
+  padding: 0.5rem;
+  border-radius: 5px;
+  color: black;
+  min-width: 40%;
+  position: static;
+}
+
+.Title {
+}
+
+.Header {
+  margin-top: 1rem;
+}

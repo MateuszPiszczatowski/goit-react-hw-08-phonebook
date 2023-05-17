@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { getToken } from "../../redux/selectors";
 import { logoutOp } from "../../redux/operations";
+import Button from "../Button/Button";
 
 const LogoutButton = () => {
   const token = useSelector(getToken);
@@ -9,7 +10,11 @@ const LogoutButton = () => {
     dispatch(logoutOp(token));
   };
 
-  return <button onClick={handleClick}>Log out</button>;
+  return (
+    <Button $red onClick={handleClick}>
+      Log out
+    </Button>
+  );
 };
 
 export default LogoutButton;
